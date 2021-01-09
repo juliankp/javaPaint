@@ -1,31 +1,40 @@
 package javaPaint;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
+
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
 import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.Color;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.UIManager;
-import java.awt.SystemColor;
+import javax.swing.JTextField;
 
 public class window extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
 	
 	//neu
 	JButton btnClearPicture, blackBtn, blueBtn, greenBtn, redBtn, magentaBtn;
-	DrawArea drawArea;
+	static DrawArea drawArea;
 	
 	ActionListener actionListener = new ActionListener() {
 		  
@@ -50,16 +59,17 @@ public class window extends JFrame {
 		    }
 		    }
 	};
-	public static JButton btnCustomColor1;
 	public static JMenuBar menuBar;
 	public static JMenu mnNewMenu;
-	public static JButton btnNewButton_2;
-	//public static JButton btnCustomColor2;
+	public static JButton btnEditCustomColors;
+	public static JButton btnCustomColor1;
+	public static JButton btnCustomColor2;
 	public static JButton btnCustomColor3;
 	public static JButton btnCustomColor4;
 	public static JButton btnCustomColor5;
 	public static JButton btnCustomColor6;
-	public static JButton btnCustomColor2;
+	public static JLabel lblMouseCoords;
+	public static JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -83,22 +93,23 @@ public class window extends JFrame {
 
 		// create main frame
 	    JFrame frame = new JFrame("javaPaint");
+	    
 	    Container content = frame.getContentPane();
 	    frame.getContentPane().setLayout(null);
 	    // create draw area
 	    drawArea = new DrawArea();
-	    drawArea.setBounds(132, 33, 596, 495);
+	    drawArea.setBounds(132, 33, 1500, 1500);
 	 
 	    // add to content pane
 	    content.add(drawArea);
 	    
-	    JLabel lblNewLabel = new JLabel("Werkzeuge");
-	    lblNewLabel.setBounds(10, 33, 72, 14);
-	    frame.getContentPane().add(lblNewLabel);
+	    JLabel lblTools = new JLabel("Werkzeuge");
+	    lblTools.setBounds(10, 33, 72, 14);
+	    frame.getContentPane().add(lblTools);
 	    
-	    JLabel lblNewLabel_1 = new JLabel("Farben");
-	    lblNewLabel_1.setBounds(10, 226, 46, 14);
-	    frame.getContentPane().add(lblNewLabel_1);
+	    JLabel lblColors = new JLabel("Farben");
+	    lblColors.setBounds(10, 226, 46, 14);
+	    frame.getContentPane().add(lblColors);
 	    
 	    btnCustomColor1 = new JButton("");
 	    btnCustomColor1.setBackground(Color.WHITE);
@@ -127,15 +138,15 @@ public class window extends JFrame {
 	    frame.getContentPane().add(magentaBtn);
 	    
 	       btnClearPicture = new JButton("Bild leeren");
-	       btnClearPicture.setBounds(10, 192, 108, 23);
+	       btnClearPicture.setBounds(10, 192, 102, 23);
 	       frame.getContentPane().add(btnClearPicture);
 	       
-	       JLabel lblNewLabel_2 = new JLabel("Angepasste Farben");
-	       lblNewLabel_2.setBounds(10, 383, 112, 14);
-	       frame.getContentPane().add(lblNewLabel_2);
+	       JLabel lblCustomColors = new JLabel("Angepasste Farben");
+	       lblCustomColors.setBounds(10, 383, 112, 14);
+	       frame.getContentPane().add(lblCustomColors);
 	       
-	       btnNewButton_2 = new JButton("Bearbeiten");
-	       btnNewButton_2.addActionListener(new ActionListener() {
+	       btnEditCustomColors = new JButton("Bearbeiten");
+	       btnEditCustomColors.addActionListener(new ActionListener() {
 	       	public void actionPerformed(ActionEvent e) {
 	       		//customColors.setVisible(true);
 	       		customColors form = new customColors();
@@ -143,8 +154,8 @@ public class window extends JFrame {
 	       		//this.setVisible(false);
 	       	}
 	       });
-	       btnNewButton_2.setBounds(10, 511, 89, 23);
-	       frame.getContentPane().add(btnNewButton_2);
+	       btnEditCustomColors.setBounds(10, 511, 102, 23);
+	       frame.getContentPane().add(btnEditCustomColors);
 	       
 	       btnCustomColor3 = new JButton("");
 	       btnCustomColor3.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -178,6 +189,41 @@ public class window extends JFrame {
 	       btnCustomColor2.setBounds(67, 409, 45, 23);
 	       frame.getContentPane().add(btnCustomColor2);
 	       
+	       JLabel lblThickness = new JLabel("Dicke:");
+	       lblThickness.setBounds(10, 61, 72, 14);
+	       frame.getContentPane().add(lblThickness);
+	       
+	       lblMouseCoords = new JLabel("0, 0");
+	       lblMouseCoords.setBounds(132, 8, 62, 14);
+	       frame.getContentPane().add(lblMouseCoords);
+	       
+	       textField = new JTextField();
+	       textField.setText("1");
+	       textField.setBounds(55, 58, 57, 20);
+	       frame.getContentPane().add(textField);
+	       textField.setColumns(10);
+	       
+	       JButton btnNewButton = new JButton("Screenshot");
+	       btnNewButton.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		frame.setState(frame.ICONIFIED);//minimize window for screenshot
+
+	            try {
+	                Robot robot = new Robot();
+	                Rectangle screenRect = new Rectangle(1920, 1080);//screen color
+		            BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+		            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximize again
+		            DrawArea.paintImage(screenFullImage);//send to paint to programm
+	                
+	            } catch (AWTException ex) {
+	                System.err.println(ex);
+	            }
+	           
+	       	}
+	       });
+	       btnNewButton.setBounds(10, 165, 102, 23);
+	       frame.getContentPane().add(btnNewButton);
+	       
 	       
 	    magentaBtn.addActionListener(actionListener);
 	    redBtn.addActionListener(actionListener);
@@ -191,7 +237,7 @@ public class window extends JFrame {
 	    	}
 	    });
 	 
-	    frame.setSize(754, 636);
+	    frame.setSize(754, 603);
 	    // can close frame
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
@@ -201,7 +247,32 @@ public class window extends JFrame {
 	    mnNewMenu = new JMenu("Datei");
 	    menuBar.add(mnNewMenu);
 	    
+	    // select picture and load into buffered image
 	    JMenuItem mntmNewMenuItem = new JMenuItem("\u00D6ffnen");
+	    mntmNewMenuItem.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		FileDialog fd = new FileDialog(frame, "Choose a file", FileDialog.LOAD);
+	    		fd.setDirectory("C:\\");
+	    		//fd.setFile("*.png");//dateiformat beschränken auf png
+	    		fd.setVisible(true);
+	    		String filename = fd.getFile();
+	    		String path = fd.getDirectory();
+	    		String pathAndFilename = path + filename;
+	    		System.out.println(pathAndFilename);
+	    		
+	    		if (filename == null) {
+	    			System.out.println("You cancelled the choice");
+	    		}
+	    		else {
+	    			try {
+	    				//try to load image that was selected with the dialog into a BufferedImage
+	    				BufferedImage img = ImageIO.read(new File(pathAndFilename));
+	    				DrawArea.paintImage(img);
+	    			} catch (IOException e1) {
+	    			}
+	    		}
+	    	}
+	    });
 	    mnNewMenu.add(mntmNewMenuItem);
 	    
 	    JMenuItem mntmNewMenuItem_1 = new JMenuItem("Speichern");

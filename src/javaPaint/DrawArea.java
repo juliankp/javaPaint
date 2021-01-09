@@ -2,7 +2,7 @@ package javaPaint;
  
 import java.awt.BasicStroke;
 import java.awt.Color;
-
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -10,7 +10,8 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
- 
+import java.awt.image.BufferedImage;
+
 import javax.swing.JComponent;
 
 //colorpicker
@@ -48,10 +49,12 @@ public class DrawArea extends JComponent {
     		// coord x,y when drag mouse
     		currentX = e.getX();
     		currentY = e.getY();
+    		//set coords to lbl in window
+    		window.lblMouseCoords.setText(currentX + ", " + currentY);
  
     		if (g2 != null) {
     			// draw line if g2 context not null
-    			g2.setStroke(new BasicStroke(4));
+    			g2.setStroke(new BasicStroke(Integer.valueOf(window.textThickness.getText())));
     			g2.drawLine(oldX, oldY, currentX, currentY);
     			// refresh draw area to repaint
     			repaint();
@@ -108,30 +111,35 @@ public class DrawArea extends JComponent {
   }
   
   public static void useColor1() {
-	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
 	  g2.setPaint(color1);
   }
   
   public static void useColor2() {
-	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
 	  g2.setPaint(color2);
   }
   
   public static void useColor3() {
-	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
 	  g2.setPaint(color3);
   }
   public static void useColor4() {
-	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
 	  g2.setPaint(color4);
   }
   public static void useColor5() {
-	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
 	  g2.setPaint(color5);
   }
   public static void useColor6() {
-	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
 	  g2.setPaint(color6);
   }
  
+  public static void paintImage(BufferedImage img) {
+	  int width = img.getWidth();
+	  int height = img.getHeight();	  
+	  
+	  System.out.println(width + " " + height);
+	  window.drawArea.setBounds(132, 33, width, height);
+	  
+	  System.out.println(window.drawArea.getHeight());
+	  
+	  g2.drawImage(img, null, 0, 0);
+  }
 }
