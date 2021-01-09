@@ -24,6 +24,14 @@ public class DrawArea extends JComponent {
   private static Graphics2D g2;
   // Mouse coordinates
   private int currentX, currentY, oldX, oldY;
+  
+  //Custom color for user
+  public static Color color1 = new Color(255, 255, 255); 
+  public static Color color2 = new Color(255, 255, 255); 
+  public static Color color3 = new Color(255, 255, 255); 
+  public static Color color4 = new Color(255, 255, 255); 
+  public static Color color5 = new Color(255, 255, 255);
+  public static Color color6 = new Color(255, 255, 255); 
  
   public DrawArea() {
 	  setDoubleBuffered(false);
@@ -99,9 +107,31 @@ public class DrawArea extends JComponent {
 	  g2.setPaint(Color.blue);
   }
   
-  public static void colorPicker() {
-	  Color ausgewaehlteFarbe = JColorChooser.showDialog(null, "Farbauswahl", null);
-	  g2.setPaint(ausgewaehlteFarbe);
+  public static void useColor1() {
+	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
+	  g2.setPaint(color1);
+  }
+  
+  public static void useColor2() {
+	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
+	  g2.setPaint(color2);
+  }
+  
+  public static void useColor3() {
+	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
+	  g2.setPaint(color3);
+  }
+  public static void useColor4() {
+	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
+	  g2.setPaint(color4);
+  }
+  public static void useColor5() {
+	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
+	  g2.setPaint(color5);
+  }
+  public static void useColor6() {
+	  //color1 = JColorChooser.showDialog(null, "Farbauswahl", null);
+	  g2.setPaint(color6);
   }
  
 }
