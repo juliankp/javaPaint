@@ -69,7 +69,7 @@ public class window extends JFrame {
 	public static JButton btnCustomColor5;
 	public static JButton btnCustomColor6;
 	public static JLabel lblMouseCoords;
-	public static JTextField textField;
+	public static JTextField textThickness;
 
 	/**
 	 * Launch the application.
@@ -158,23 +158,43 @@ public class window extends JFrame {
 	       frame.getContentPane().add(btnEditCustomColors);
 	       
 	       btnCustomColor3 = new JButton("");
+	       btnCustomColor3.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor3();
+	       	}
+	       });
 	       btnCustomColor3.setFont(new Font("Tahoma", Font.PLAIN, 10));
 	       btnCustomColor3.setBackground(Color.WHITE);
 	       btnCustomColor3.setBounds(10, 443, 46, 23);
 	       frame.getContentPane().add(btnCustomColor3);
 	       
 	       btnCustomColor4 = new JButton("");
+	       btnCustomColor4.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor4();
+	       	}
+	       });
 	       btnCustomColor4.setBackground(Color.WHITE);
 	       btnCustomColor4.setBounds(66, 443, 46, 23);
 	       frame.getContentPane().add(btnCustomColor4);
 	       
 	       btnCustomColor5 = new JButton("");
+	       btnCustomColor5.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor5();
+	       	}
+	       });
 	       btnCustomColor5.setFont(new Font("Tahoma", Font.PLAIN, 10));
 	       btnCustomColor5.setBackground(Color.WHITE);
 	       btnCustomColor5.setBounds(10, 477, 46, 23);
 	       frame.getContentPane().add(btnCustomColor5);
 	       
 	       btnCustomColor6 = new JButton("");
+	       btnCustomColor6.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor6();
+	       	}
+	       });
 	       btnCustomColor6.setBackground(Color.WHITE);
 	       btnCustomColor6.setBounds(66, 477, 46, 23);
 	       frame.getContentPane().add(btnCustomColor6);
@@ -197,11 +217,11 @@ public class window extends JFrame {
 	       lblMouseCoords.setBounds(132, 8, 62, 14);
 	       frame.getContentPane().add(lblMouseCoords);
 	       
-	       textField = new JTextField();
-	       textField.setText("1");
-	       textField.setBounds(55, 58, 57, 20);
-	       frame.getContentPane().add(textField);
-	       textField.setColumns(10);
+	       textThickness = new JTextField();
+	       textThickness.setText("1");
+	       textThickness.setBounds(55, 58, 57, 20);
+	       frame.getContentPane().add(textThickness);
+	       textThickness.setColumns(10);
 	       
 	       JButton btnNewButton = new JButton("Screenshot");
 	       btnNewButton.addActionListener(new ActionListener() {
@@ -253,7 +273,7 @@ public class window extends JFrame {
 	    	public void actionPerformed(ActionEvent e) {
 	    		FileDialog fd = new FileDialog(frame, "Choose a file", FileDialog.LOAD);
 	    		fd.setDirectory("C:\\");
-	    		//fd.setFile("*.png");//dateiformat beschränken auf png
+	    		//fd.setFile("*.png");//dateiformat beschrï¿½nken auf png
 	    		fd.setVisible(true);
 	    		String filename = fd.getFile();
 	    		String path = fd.getDirectory();
