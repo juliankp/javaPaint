@@ -1,2 +1,10 @@
 /bin/
 *.class
+bin/javaPaint/window$1.class
+bin/javaPaint/DrawArea.class
+bin/javaPaint/DrawArea$2.class
+bin/javaPaint/DrawArea$1.class
+bin/javaPaint/window$2.class
+bin/javaPaint/window$3.class
+bin/javaPaint/window.class
+*.class

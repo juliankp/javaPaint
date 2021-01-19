@@ -1,10 +1,9 @@
 package javaPaint;
 
+
 import java.awt.AWTException;
-import java.awt.BorderLayout;
 
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
@@ -30,35 +29,8 @@ import javax.swing.JTextField;
 
 public class window extends JFrame {
 
-	public JPanel contentPane;
+	private static final long serialVersionUID = 4314383898969812662L;
 	
-	//neu
-	JButton btnClearPicture, blackBtn, blueBtn, greenBtn, redBtn, magentaBtn;
-	static DrawArea drawArea;
-	
-	ActionListener actionListener = new ActionListener() {
-		  
-	public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == btnClearPicture) {
-		        drawArea.clear();
-		    } 
-			else if (e.getSource() == blackBtn) {
-		        drawArea.black();
-		    } 
-			else if (e.getSource() == blueBtn) {
-		        drawArea.blue();
-		    } 
-			else if (e.getSource() == greenBtn) {
-		        drawArea.green();
-		    } 
-			else if (e.getSource() == redBtn) {
-		        drawArea.red();
-		    } 
-			else if (e.getSource() == magentaBtn) {
-		        drawArea.magenta();
-		    }
-		    }
-	};
 	public static JMenuBar menuBar;
 	public static JMenu mnNewMenu;
 	public static JButton btnEditCustomColors;
@@ -70,6 +42,15 @@ public class window extends JFrame {
 	public static JButton btnCustomColor6;
 	public static JLabel lblMouseCoords;
 	public static JTextField textThickness;
+	public static JButton btnClearPicture;
+	public static JButton blackBtn;
+	public static JButton blueBtn;
+	public static JButton greenBtn;
+	public static JButton redBtn;
+	public static JButton magentaBtn;
+	public static JButton btnScreenshot;
+	public static DrawArea drawArea;
+	public static JMenuItem mntmNewMenuItem;
 
 	/**
 	 * Launch the application.
@@ -78,7 +59,8 @@ public class window extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					window frame = new window();
+					window frame2 = new window();
+					//frame2.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -90,7 +72,13 @@ public class window extends JFrame {
 	 * Create the frame.
 	 */
 	public window() {
+		//setResizable(false);
+		// Methoden um die Buttons aus dem Windowbuildercode zu sepperieren
+		initComponents();
+		createEvents();
+	}
 
+	private void initComponents() {
 		// create main frame
 	    JFrame frame = new JFrame("javaPaint");
 	    
@@ -137,127 +125,77 @@ public class window extends JFrame {
 	    magentaBtn.setBounds(66, 281, 46, 23);
 	    frame.getContentPane().add(magentaBtn);
 	    
-	       btnClearPicture = new JButton("Bild leeren");
-	       btnClearPicture.setBounds(10, 192, 102, 23);
-	       frame.getContentPane().add(btnClearPicture);
+	    btnClearPicture = new JButton("Bild leeren");
+	    btnClearPicture.setBounds(10, 192, 102, 23);
+	    frame.getContentPane().add(btnClearPicture);
 	       
-	       JLabel lblCustomColors = new JLabel("Angepasste Farben");
-	       lblCustomColors.setBounds(10, 383, 112, 14);
-	       frame.getContentPane().add(lblCustomColors);
+	    JLabel lblCustomColors = new JLabel("Angepasste Farben");
+	    lblCustomColors.setBounds(10, 383, 112, 14);
+	    frame.getContentPane().add(lblCustomColors);
 	       
-	       btnEditCustomColors = new JButton("Bearbeiten");
-	       btnEditCustomColors.addActionListener(new ActionListener() {
-	       	public void actionPerformed(ActionEvent e) {
-	       		//customColors.setVisible(true);
-	       		customColors form = new customColors();
-	       		form.setVisible(true);
-	       		//this.setVisible(false);
-	       	}
-	       });
-	       btnEditCustomColors.setBounds(10, 511, 102, 23);
-	       frame.getContentPane().add(btnEditCustomColors);
+	    btnEditCustomColors = new JButton("Bearbeiten");
+		btnEditCustomColors.setBounds(10, 511, 102, 23);
+	    frame.getContentPane().add(btnEditCustomColors);
 	       
-	       btnCustomColor3 = new JButton("");
-	       btnCustomColor3.addActionListener(new ActionListener() {
-	       	public void actionPerformed(ActionEvent e) {
-	       		DrawArea.useColor3();
-	       	}
-	       });
-	       btnCustomColor3.setFont(new Font("Tahoma", Font.PLAIN, 10));
-	       btnCustomColor3.setBackground(Color.WHITE);
-	       btnCustomColor3.setBounds(10, 443, 46, 23);
-	       frame.getContentPane().add(btnCustomColor3);
+	    btnCustomColor3 = new JButton("");
+		   
+		btnCustomColor3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+	    btnCustomColor3.setBackground(Color.WHITE);
+	    btnCustomColor3.setBounds(10, 443, 46, 23);
+	    frame.getContentPane().add(btnCustomColor3);
 	       
-	       btnCustomColor4 = new JButton("");
-	       btnCustomColor4.addActionListener(new ActionListener() {
-	       	public void actionPerformed(ActionEvent e) {
-	       		DrawArea.useColor4();
-	       	}
-	       });
-	       btnCustomColor4.setBackground(Color.WHITE);
-	       btnCustomColor4.setBounds(66, 443, 46, 23);
-	       frame.getContentPane().add(btnCustomColor4);
+	    btnCustomColor4 = new JButton("");
+		   
+		btnCustomColor4.setBackground(Color.WHITE);
+	    btnCustomColor4.setBounds(66, 443, 46, 23);
+	    frame.getContentPane().add(btnCustomColor4);
 	       
-	       btnCustomColor5 = new JButton("");
-	       btnCustomColor5.addActionListener(new ActionListener() {
-	       	public void actionPerformed(ActionEvent e) {
-	       		DrawArea.useColor5();
-	       	}
-	       });
-	       btnCustomColor5.setFont(new Font("Tahoma", Font.PLAIN, 10));
-	       btnCustomColor5.setBackground(Color.WHITE);
-	       btnCustomColor5.setBounds(10, 477, 46, 23);
-	       frame.getContentPane().add(btnCustomColor5);
+	    btnCustomColor5 = new JButton("");
+		  
+		btnCustomColor5.setFont(new Font("Tahoma", Font.PLAIN, 10));
+	    btnCustomColor5.setBackground(Color.WHITE);
+	    btnCustomColor5.setBounds(10, 477, 46, 23);
+	    frame.getContentPane().add(btnCustomColor5);
+	      
+	    btnCustomColor6 = new JButton("");
+		   
+		btnCustomColor6.setBackground(Color.WHITE);
+	    btnCustomColor6.setBounds(66, 477, 46, 23);
+	    frame.getContentPane().add(btnCustomColor6);
 	       
-	       btnCustomColor6 = new JButton("");
-	       btnCustomColor6.addActionListener(new ActionListener() {
-	       	public void actionPerformed(ActionEvent e) {
-	       		DrawArea.useColor6();
-	       	}
-	       });
-	       btnCustomColor6.setBackground(Color.WHITE);
-	       btnCustomColor6.setBounds(66, 477, 46, 23);
-	       frame.getContentPane().add(btnCustomColor6);
+	    btnCustomColor2 = new JButton("");
+	    btnCustomColor2.setBackground(Color.WHITE);
+		   
+		btnCustomColor2.setBounds(67, 409, 45, 23);
+	    frame.getContentPane().add(btnCustomColor2);
+	      
+	    JLabel lblThickness = new JLabel("Dicke:");
+	    lblThickness.setBounds(10, 61, 72, 14);
+	    frame.getContentPane().add(lblThickness);
+	      
+	    lblMouseCoords = new JLabel("0, 0");
+	    lblMouseCoords.setBounds(132, 8, 62, 14);
+	    frame.getContentPane().add(lblMouseCoords);
 	       
-	       btnCustomColor2 = new JButton("");
-	       btnCustomColor2.setBackground(Color.WHITE);
-	       btnCustomColor2.addActionListener(new ActionListener() {
-	       	public void actionPerformed(ActionEvent e) {
-	       		DrawArea.useColor2();
-	       	}
-	       });
-	       btnCustomColor2.setBounds(67, 409, 45, 23);
-	       frame.getContentPane().add(btnCustomColor2);
+	    textThickness = new JTextField();
+	    textThickness.setText("1");
+	    textThickness.setBounds(55, 58, 57, 20);
+	    frame.getContentPane().add(textThickness);
+	    textThickness.setColumns(10);
 	       
-	       JLabel lblThickness = new JLabel("Dicke:");
-	       lblThickness.setBounds(10, 61, 72, 14);
-	       frame.getContentPane().add(lblThickness);
+	    btnScreenshot = new JButton("Screenshot");
+		   
+		btnScreenshot.setBounds(10, 165, 102, 23);
+	    frame.getContentPane().add(btnScreenshot);
 	       
-	       lblMouseCoords = new JLabel("0, 0");
-	       lblMouseCoords.setBounds(132, 8, 62, 14);
-	       frame.getContentPane().add(lblMouseCoords);
-	       
-	       textThickness = new JTextField();
-	       textThickness.setText("1");
-	       textThickness.setBounds(55, 58, 57, 20);
-	       frame.getContentPane().add(textThickness);
-	       textThickness.setColumns(10);
-	       
-	       JButton btnNewButton = new JButton("Screenshot");
-	       btnNewButton.addActionListener(new ActionListener() {
-	       	public void actionPerformed(ActionEvent e) {
-	       		frame.setState(frame.ICONIFIED);//minimize window for screenshot
-
-	            try {
-	                Robot robot = new Robot();
-	                Rectangle screenRect = new Rectangle(1920, 1080);//screen color
-		            BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
-		            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximize again
-		            DrawArea.paintImage(screenFullImage);//send to paint to programm
-	                
-	            } catch (AWTException ex) {
-	                System.err.println(ex);
-	            }
-	           
-	       	}
-	       });
-	       btnNewButton.setBounds(10, 165, 102, 23);
-	       frame.getContentPane().add(btnNewButton);
-	       
-	       
+	       /*
 	    magentaBtn.addActionListener(actionListener);
 	    redBtn.addActionListener(actionListener);
 	    blackBtn.addActionListener(actionListener);
 	    blueBtn.addActionListener(actionListener);
 	    greenBtn.addActionListener(actionListener);
-	    
-	    btnCustomColor1.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		DrawArea.useColor1();
-	    	}
-	    });
-	 
-	    frame.setSize(754, 603);
+		*/
+		frame.setSize(754, 603);
 	    // can close frame
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
@@ -268,10 +206,98 @@ public class window extends JFrame {
 	    menuBar.add(mnNewMenu);
 	    
 	    // select picture and load into buffered image
-	    JMenuItem mntmNewMenuItem = new JMenuItem("\u00D6ffnen");
-	    mntmNewMenuItem.addActionListener(new ActionListener() {
+	    mntmNewMenuItem = new JMenuItem("\u00D6ffnen");
+		
+		mnNewMenu.add(mntmNewMenuItem);
+	    
+	    JMenuItem mntmNewMenuItem_1 = new JMenuItem("Speichern");
+	    mnNewMenu.add(mntmNewMenuItem_1);
+	    // show the swing paint result
+	    frame.setVisible(true);
+		
+	}
+	
+	public static void refreshCustomColorButtons() {
+		btnCustomColor1.setBackground(DrawArea.color1);
+		btnCustomColor2.setBackground(DrawArea.color2);
+		btnCustomColor3.setBackground(DrawArea.color3);
+		btnCustomColor4.setBackground(DrawArea.color4);
+		btnCustomColor5.setBackground(DrawArea.color5);
+		btnCustomColor6.setBackground(DrawArea.color6);
+	}
+	
+	
+
+	private void createEvents() {
+		btnEditCustomColors.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		//customColors.setVisible(true);
+	       		customColors form = new customColors();
+	       		form.setVisible(true);
+	       		//this.setVisible(false);
+	       	}
+	       });
+		   
+		   btnCustomColor3.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor3();
+	       	}
+	       });
+		   
+		   btnCustomColor4.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor4();
+	       	}
+	       });
+		   
+		   btnCustomColor5.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor5();
+	       	}
+	       });
+		   
+		   btnCustomColor6.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor6();
+	       	}
+	       });
+		   
+		   btnCustomColor2.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		DrawArea.useColor2();
+	       	}
+	       });
+		   
+		   btnScreenshot.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		setState(ICONIFIED);//minimize window for screenshot
+	       		/*hier muss noch gefixt werden, dass entweder das fenster wieder minimiert wird oder
+	       		* eine tastenkombination für das screenshot machen festgelegt wird
+	       		*
+	       		*/
+	            try {
+	                Robot robot = new Robot();
+	                Rectangle screenRect = new Rectangle(1920, 1080);//screen color
+		            BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+		            setExtendedState(JFrame.MAXIMIZED_BOTH);//maximize again
+		            DrawArea.paintImage(screenFullImage);//send to paint to programm
+	                
+	            } catch (AWTException ex) {
+	                System.err.println(ex);
+	            }
+	           
+	       	}
+	       }); 
+		   
+		   btnCustomColor1.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		FileDialog fd = new FileDialog(frame, "Choose a file", FileDialog.LOAD);
+	    		DrawArea.useColor1();
+	    	}
+	    });
+		
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		FileDialog fd = new FileDialog(new JFrame(), "Choose a file", FileDialog.LOAD);
 	    		fd.setDirectory("C:\\");
 	    		//fd.setFile("*.png");//dateiformat beschr�nken auf png
 	    		fd.setVisible(true);
@@ -292,22 +318,7 @@ public class window extends JFrame {
 	    			}
 	    		}
 	    	}
-	    });
-	    mnNewMenu.add(mntmNewMenuItem);
-	    
-	    JMenuItem mntmNewMenuItem_1 = new JMenuItem("Speichern");
-	    mnNewMenu.add(mntmNewMenuItem_1);
-	    // show the swing paint result
-	    frame.setVisible(true);
-	 
-	}
-	
-	public static void refreshCustomColorButtons() {
-		btnCustomColor1.setBackground(DrawArea.color1);
-		btnCustomColor2.setBackground(DrawArea.color2);
-		btnCustomColor3.setBackground(DrawArea.color3);
-		btnCustomColor4.setBackground(DrawArea.color4);
-		btnCustomColor5.setBackground(DrawArea.color5);
-		btnCustomColor6.setBackground(DrawArea.color6);
+	    }); 
+		
 	}
 }
