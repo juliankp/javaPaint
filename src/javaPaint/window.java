@@ -1,6 +1,5 @@
 package javaPaint;
 
-
 import java.awt.AWTException;
 
 import java.awt.Container;
@@ -14,8 +13,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import javax.swing.JMenuBar;
 import javax.swing.JLabel;
@@ -26,6 +25,8 @@ import java.awt.Color;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class window extends JFrame {
 
@@ -43,14 +44,15 @@ public class window extends JFrame {
 	public static JLabel lblMouseCoords;
 	public static JTextField textThickness;
 	public static JButton btnClearPicture;
-	public static JButton blackBtn;
-	public static JButton blueBtn;
-	public static JButton greenBtn;
-	public static JButton redBtn;
-	public static JButton magentaBtn;
+	public static JButton btnBlack;
+	public static JButton btnBlue;
+	public static JButton btnGreen;
+	public static JButton btnRed;
+	public static JButton btnMagenta;
 	public static JButton btnScreenshot;
 	public static DrawArea drawArea;
-	public static JMenuItem mntmNewMenuItem;
+	public static JMenuItem mntmOpen;
+	public static JMenuItem mntmSave;
 
 	/**
 	 * Launch the application.
@@ -60,7 +62,7 @@ public class window extends JFrame {
 			public void run() {
 				try {
 					window frame2 = new window();
-					//frame2.setVisible(true);
+					frame2.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -80,10 +82,9 @@ public class window extends JFrame {
 
 	private void initComponents() {
 		// create main frame
-	    JFrame frame = new JFrame("javaPaint");
 	    
-	    Container content = frame.getContentPane();
-	    frame.getContentPane().setLayout(null);
+	    Container content = getContentPane();
+	    getContentPane().setLayout(null);
 	    // create draw area
 	    drawArea = new DrawArea();
 	    drawArea.setBounds(132, 33, 1500, 1500);
@@ -93,127 +94,118 @@ public class window extends JFrame {
 	    
 	    JLabel lblTools = new JLabel("Werkzeuge");
 	    lblTools.setBounds(10, 33, 72, 14);
-	    frame.getContentPane().add(lblTools);
+	    getContentPane().add(lblTools);
 	    
 	    JLabel lblColors = new JLabel("Farben");
 	    lblColors.setBounds(10, 226, 46, 14);
-	    frame.getContentPane().add(lblColors);
+	    getContentPane().add(lblColors);
 	    
 	    btnCustomColor1 = new JButton("");
 	    btnCustomColor1.setBackground(Color.WHITE);
 	    btnCustomColor1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 	    btnCustomColor1.setBounds(10, 409, 46, 23);
-	    frame.getContentPane().add(btnCustomColor1);
-	    greenBtn = new JButton("");
-	    greenBtn.setBackground(Color.GREEN);
-	    greenBtn.setBounds(10, 251, 46, 23);
-	    frame.getContentPane().add(greenBtn);
-	    blueBtn = new JButton("");
-	    blueBtn.setBackground(Color.BLUE);
-	    blueBtn.setBounds(10, 281, 46, 23);
-	    frame.getContentPane().add(blueBtn);
-	    blackBtn = new JButton("");
-	    blackBtn.setBackground(Color.BLACK);
-	    blackBtn.setBounds(10, 315, 46, 23);
-	    frame.getContentPane().add(blackBtn);
-	    redBtn = new JButton("");
-	    redBtn.setBackground(Color.RED);
-	    redBtn.setBounds(66, 251, 46, 23);
-	    frame.getContentPane().add(redBtn);
-	    magentaBtn = new JButton("");
-	    magentaBtn.setBackground(Color.MAGENTA);
-	    magentaBtn.setBounds(66, 281, 46, 23);
-	    frame.getContentPane().add(magentaBtn);
+	    getContentPane().add(btnCustomColor1);
+	    btnGreen = new JButton("");
+	    btnGreen.setBackground(Color.GREEN);
+	    btnGreen.setBounds(10, 251, 46, 23);
+	    getContentPane().add(btnGreen);
+	    btnBlue = new JButton("");
+	    btnBlue.setBackground(Color.BLUE);
+	    btnBlue.setBounds(10, 281, 46, 23);
+	    getContentPane().add(btnBlue);
+	    btnBlack = new JButton("");
+	    btnBlack.setBackground(Color.BLACK);
+	    btnBlack.setBounds(10, 315, 46, 23);
+	    getContentPane().add(btnBlack);
+	    btnRed = new JButton("");
+	    btnRed.setBackground(Color.RED);
+	    btnRed.setBounds(66, 251, 46, 23);
+	    getContentPane().add(btnRed);
+	    btnMagenta = new JButton("");
+	    btnMagenta.setBackground(Color.MAGENTA);
+	    btnMagenta.setBounds(66, 281, 46, 23);
+	    getContentPane().add(btnMagenta);
 	    
 	    btnClearPicture = new JButton("Bild leeren");
 	    btnClearPicture.setBounds(10, 192, 102, 23);
-	    frame.getContentPane().add(btnClearPicture);
+	    getContentPane().add(btnClearPicture);
 	       
 	    JLabel lblCustomColors = new JLabel("Angepasste Farben");
 	    lblCustomColors.setBounds(10, 383, 112, 14);
-	    frame.getContentPane().add(lblCustomColors);
+	    getContentPane().add(lblCustomColors);
 	       
 	    btnEditCustomColors = new JButton("Bearbeiten");
 		btnEditCustomColors.setBounds(10, 511, 102, 23);
-	    frame.getContentPane().add(btnEditCustomColors);
+	    getContentPane().add(btnEditCustomColors);
 	       
 	    btnCustomColor3 = new JButton("");
 		   
 		btnCustomColor3.setFont(new Font("Tahoma", Font.PLAIN, 10));
 	    btnCustomColor3.setBackground(Color.WHITE);
 	    btnCustomColor3.setBounds(10, 443, 46, 23);
-	    frame.getContentPane().add(btnCustomColor3);
+	    getContentPane().add(btnCustomColor3);
 	       
 	    btnCustomColor4 = new JButton("");
 		   
 		btnCustomColor4.setBackground(Color.WHITE);
 	    btnCustomColor4.setBounds(66, 443, 46, 23);
-	    frame.getContentPane().add(btnCustomColor4);
+	    getContentPane().add(btnCustomColor4);
 	       
 	    btnCustomColor5 = new JButton("");
 		  
 		btnCustomColor5.setFont(new Font("Tahoma", Font.PLAIN, 10));
 	    btnCustomColor5.setBackground(Color.WHITE);
 	    btnCustomColor5.setBounds(10, 477, 46, 23);
-	    frame.getContentPane().add(btnCustomColor5);
+	    getContentPane().add(btnCustomColor5);
 	      
 	    btnCustomColor6 = new JButton("");
 		   
 		btnCustomColor6.setBackground(Color.WHITE);
 	    btnCustomColor6.setBounds(66, 477, 46, 23);
-	    frame.getContentPane().add(btnCustomColor6);
+	    getContentPane().add(btnCustomColor6);
 	       
 	    btnCustomColor2 = new JButton("");
 	    btnCustomColor2.setBackground(Color.WHITE);
 		   
 		btnCustomColor2.setBounds(67, 409, 45, 23);
-	    frame.getContentPane().add(btnCustomColor2);
+	    getContentPane().add(btnCustomColor2);
 	      
 	    JLabel lblThickness = new JLabel("Dicke:");
 	    lblThickness.setBounds(10, 61, 72, 14);
-	    frame.getContentPane().add(lblThickness);
+	    getContentPane().add(lblThickness);
 	      
 	    lblMouseCoords = new JLabel("0, 0");
 	    lblMouseCoords.setBounds(132, 8, 62, 14);
-	    frame.getContentPane().add(lblMouseCoords);
+	    getContentPane().add(lblMouseCoords);
 	       
 	    textThickness = new JTextField();
 	    textThickness.setText("1");
 	    textThickness.setBounds(55, 58, 57, 20);
-	    frame.getContentPane().add(textThickness);
+	    getContentPane().add(textThickness);
 	    textThickness.setColumns(10);
 	       
 	    btnScreenshot = new JButton("Screenshot");
 		   
 		btnScreenshot.setBounds(10, 165, 102, 23);
-	    frame.getContentPane().add(btnScreenshot);
+	    getContentPane().add(btnScreenshot);
 	       
-	       /*
-	    magentaBtn.addActionListener(actionListener);
-	    redBtn.addActionListener(actionListener);
-	    blackBtn.addActionListener(actionListener);
-	    blueBtn.addActionListener(actionListener);
-	    greenBtn.addActionListener(actionListener);
-		*/
-		frame.setSize(754, 603);
+		setSize(754, 603);
 	    // can close frame
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    menuBar = new JMenuBar();
-	    frame.setJMenuBar(menuBar);
+	    setJMenuBar(menuBar);
 	    
 	    mnNewMenu = new JMenu("Datei");
 	    menuBar.add(mnNewMenu);
 	    
 	    // select picture and load into buffered image
-	    mntmNewMenuItem = new JMenuItem("\u00D6ffnen");
+	    mntmOpen = new JMenuItem("\u00D6ffnen");
 		
-		mnNewMenu.add(mntmNewMenuItem);
+		mnNewMenu.add(mntmOpen);
 	    
-	    JMenuItem mntmNewMenuItem_1 = new JMenuItem("Speichern");
-	    mnNewMenu.add(mntmNewMenuItem_1);
-	    // show the swing paint result
-	    frame.setVisible(true);
+	    mntmSave = new JMenuItem("Speichern");
+	    mnNewMenu.add(mntmSave);
 		
 	}
 	
@@ -295,30 +287,98 @@ public class window extends JFrame {
 	    	}
 	    });
 		
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		mntmOpen.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		FileDialog fd = new FileDialog(new JFrame(), "Choose a file", FileDialog.LOAD);
-	    		fd.setDirectory("C:\\");
-	    		//fd.setFile("*.png");//dateiformat beschr�nken auf png
-	    		fd.setVisible(true);
-	    		String filename = fd.getFile();
-	    		String path = fd.getDirectory();
-	    		String pathAndFilename = path + filename;
-	    		System.out.println(pathAndFilename);
+	    		JFileChooser chooser = new JFileChooser();
 	    		
-	    		if (filename == null) {
-	    			System.out.println("You cancelled the choice");
-	    		}
-	    		else {
+	    		FileFilter filterJPG = new FileNameExtensionFilter("Bilder", "jpg", "gif", "png");	    		
+	    		chooser.setFileFilter(filterJPG);
+	    		
+	    		int response = chooser.showDialog(chooser, "Bild öffnen");
+	    		
+	    		if (response == JFileChooser.APPROVE_OPTION) {
 	    			try {
 	    				//try to load image that was selected with the dialog into a BufferedImage
-	    				BufferedImage img = ImageIO.read(new File(pathAndFilename));
+	    				BufferedImage img = ImageIO.read(new File(chooser.getSelectedFile().getAbsolutePath()));
 	    				DrawArea.paintImage(img);
 	    			} catch (IOException e1) {
 	    			}
 	    		}
+	    		else {
+	    			System.out.println("Bild laden abgebrochen");
+	    		}
 	    	}
 	    }); 
+		
+		mntmSave.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		//create a new file chooser object
+	    		JFileChooser chooser = new JFileChooser();
+	    		
+	    		//add the diffrend filetype filters to the file chooser to filter them
+	    		FileFilter filterJPG = new FileNameExtensionFilter("JPEG Bild", "jpg");	    		
+	    		chooser.setFileFilter(filterJPG);
+	    		
+	    		FileFilter filterGIF = new FileNameExtensionFilter("GIF Bild", "gif");
+	    		chooser.setFileFilter(filterGIF);
+	    		
+	    		FileFilter filterPNG = new FileNameExtensionFilter("PNG Bild", "png");
+	    		chooser.setFileFilter(filterPNG);	    		
+	    		
+	    		//show dialog and save response for if/else decision if user canceled operation or
+	    		//made the right decison
+	    		int response = chooser.showDialog(chooser, "Bild speichern");
+	    		
+	    		if(response == JFileChooser.APPROVE_OPTION) {
+	    			//get all file extentions into a String list
+	    			String[] exts = ((FileNameExtensionFilter)chooser.getFileFilter()).getExtensions();
+	    			
+	    			//put together the complete path with the file extention
+	    			String filepath = chooser.getSelectedFile().toString() + "." + exts[0];
+	    			System.out.println(filepath);
+	    			DrawArea.save(filepath);
+	    		} 
+	    		else {
+	    			System.out.println("Bild speichern abgebrochen");
+	    		}
+	    		
+	    	}
+	    });		
+		
+	    btnMagenta.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				DrawArea.magenta();	
+			}
+		});
+	    
+	    btnRed.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				DrawArea.red();
+			}
+		});
+	    
+	    btnBlack.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				DrawArea.black();
+			}
+		});
+	    
+	    btnBlue.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				DrawArea.blue();
+			}
+		});
+	    
+	    btnGreen.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				DrawArea.green();
+			}
+		});
 		
 	}
 }

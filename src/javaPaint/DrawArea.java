@@ -10,13 +10,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 public class DrawArea extends JComponent {
  
   // Image in which we're going to draw
-  private Image image;
+  private static Image image;
   // Graphics2D object ==> used to draw on
   private static Graphics2D g2;
   // Mouse coordinates
@@ -84,25 +88,35 @@ public class DrawArea extends JComponent {
 	  g2.setPaint(Color.black);
 	  repaint();
   }
+  
+  public static void save(String pathAndFilename) {
+	    try {
+	    		//TODO need to add a functionality that read out size to not save unnessesary white space
+	            ImageIO.write((RenderedImage) image, "png", new File(pathAndFilename));
+	            
+	    } catch (IOException e) {
+	            e.printStackTrace();
+	    }
+  }
  
-  public void red() {
+  public static void red() {
 	  // apply red color on g2 context
 	  g2.setPaint(Color.red);
   }
  
-  public void black() {
+  public static void black() {
 	  g2.setPaint(Color.black);
   }
  
-  public void magenta() {
+  public static void magenta() {
 	  g2.setPaint(Color.magenta);
   }
  
-  public void green() {
+  public static void green() {
 	  g2.setPaint(Color.green);
   }
  
-  public void blue() {
+  public static void blue() {
 	  g2.setPaint(Color.blue);
   }
   
